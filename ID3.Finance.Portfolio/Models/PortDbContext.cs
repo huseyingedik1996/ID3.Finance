@@ -10,5 +10,6 @@ namespace ID3.Finance.Portfolio.Models
         }
 
         public DbSet<PortfolioModel> PorfolioModel { get; set; }
+        public DbSet<UserModel> UserModel { get; set; }
     }
 }

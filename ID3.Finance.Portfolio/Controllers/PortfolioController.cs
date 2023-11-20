@@ -1,6 +1,7 @@
 ﻿using ID3.Finance.Portfolio.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
@@ -34,8 +35,16 @@ namespace ID3.Finance.Portfolio.Controllers
             {
                 var byteMessage = ea.Body.ToArray();
                 var message = Encoding.UTF8.GetString(byteMessage);
+                var ts = message.ToString();
 
+                _context.UserModel.Add(new UserModel
+                {
+                    UserName = ts
+                });
+                _context.SaveChanges(); 
             };
+            
+            
 
 
             var user = channel.BasicConsume(queue: "user", autoAck: false, consumer: userconsumer);
